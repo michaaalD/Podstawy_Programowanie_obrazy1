@@ -5,6 +5,7 @@
 
 #define MAX 512            /* Maksymalny rozmiar wczytywanego obrazu */
 #define DL_LINII 1024      /* Dlugosc buforow pomocniczych */
+#define WCZYTANO 1
 
 /************************************************************************************
  * Funkcja wczytuje obraz PGM z pliku do tablicy       	       	       	       	    *
@@ -170,13 +171,13 @@ int main() {
 	    if (plik != NULL) {       /* co spowoduje zakomentowanie tego warunku */
 	     odczytano = czytaj(plik,obraz,&wymx,&wymy,&szarosci);
 	     fclose(plik);
-       wczytano_plik=1;
+       wczytano_plik=WCZYTANO;
 	      }
   	    break;
          }
     case 2:
       {
-      if(wczytano_plik==1){
+      if(wczytano_plik==WCZYTANO){
 	    printf("Nazwa pliku do zapisu:\n");
 	    scanf("%s",zapis_nazwa);
 	    zapis_plik=fopen(zapis_nazwa,"w");
@@ -187,21 +188,29 @@ int main() {
       }
       }
       else
-        printf("Najpierw wczytaj plik do zapisu\n");
+        printf("Nie wczytano obrazu\n");
 	    break;
       }
     case 3:
       {
-        if(wczytano_plik==1)
-        plik=fopen(nazwa_pliku,"r");
-        if(odczytano!=0)
-        wyswietl(nazwa_pliku);
+        if(wczytano_plik==WCZYTANO)
+	{
+        	plik=fopen(nazwa_pliku,"r");
+        	if(odczytano!=0)
+        	wyswietl(nazwa_pliku);
+	}
+	else
+        	printf("Nie wczytano obrazu\n");
         break;
       }
     case 4:
-      {
-	    negatyw(obraz,wymx,wymy,szarosci);
-	    printf("Wykonano negatyw obrazka\n");
+      {	
+	    if(wczytano_obraz==WCZYTANO){
+	    	negatyw(obraz,wymx,wymy,szarosci);
+	    	printf("Wykonano negatyw obrazka\n");
+	    }
+	    else
+        	printf("Nie wczytano obrazu\n");
 	    break;
       }
     case 5:
@@ -210,13 +219,23 @@ int main() {
       }
     case 6:
       {
-	    konturowanie(obraz,wymx,wymy);
-	    printf("Wykonano konturowanie obrazka\n");
+	    if(wczytano_obraz==WCZYTANO){
+	    	konturowanie(obraz,wymx,wymy);
+	    	printf("Wykonano konturowanie obrazka\n");
+	    }
+	    else
+        	printf("Nie wczytano obrazu\n");
 	    break;
       }
     case 7:
       {
-	
+	if(wczytano_obraz==WCZYTANO)
+	{
+		
+	}
+	else
+        	printf("Nie wczytano obrazu\n");
+	break;
       }
 	
     default:
