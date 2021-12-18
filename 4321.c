@@ -174,10 +174,11 @@ int main()
   printf("7.\tRozmycie Pionowe\n");
   printf("8.\tKoniec Programu\n");
   
-  scanf("%d",&wybor);
+  
 
  while(wybor!=8)
  {
+  scanf("%d",&wybor);
   
   switch(wybor)
   {
@@ -278,8 +279,9 @@ int main()
 	    break;
     
 }
+}
 printf("Koniec Programu\n");
 fclose(plik);
 return 0;
-  }
+  
 }
