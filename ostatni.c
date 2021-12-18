@@ -92,10 +92,10 @@ void progowanie(int obraz_pgm[][MAX], int wymx, int wymy, int prog, int szarosci
 	int i,j;
 	for(i=0; i<wymy; i++){
 		for(j=0; j<wymx; j++){
-			if(obraz_pgm[i][j] <= prog)
-				obraz_pgm[i][j]=0;
+			if(obraz_pgm[i][j] <= prog)  /*dla wartosci <= prog przypisuje wartosc 0*/
+				obraz_pgm[i][j]=0;  
 			else
-				obraz_pgm[i][j]=szarosci;
+				obraz_pgm[i][j]=szarosci;  /* reszcie wartosci > prog przypisuje wartosc szarosci*/
 		}
 	}
 }
@@ -105,7 +105,7 @@ void konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
       int i,j;
       for(i=0; i<wymy; i++){
 	      for(j=0; j<wymx; j++){
-	        obraz_pgm[i][j]=abs(obraz_pgm[i+1][j] - obraz_pgm[i][j]) + abs(obraz_pgm[i][j+1] - obraz_pgm[i][j]);
+	        obraz_pgm[i][j]=abs(obraz_pgm[i+1][j] - obraz_pgm[i][j]) + abs(obraz_pgm[i][j+1] - obraz_pgm[i][j]); /*funkcja porownuje 2 piksele i te ktore roznia sie od otoczenia zostana rozjasnione, a te potobne do otocznia przyciemnione*/
         }
     }
   }
@@ -161,7 +161,7 @@ int zapisz(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci,char *zapis_na
 
 int main() 
 {
-  int wczytano_plik=0;
+  int wczytano_plik=0; /* po wczytaniu przyjmie wartosc 1 i umozliwi uruchamianie funkcji*/
   int wybor;
   int obraz_pgm[MAX][MAX] ;
   int wymx,wymy,szarosci;
@@ -174,7 +174,7 @@ int main()
   FILE *plik;
   char nazwa_pliku[50];
 
-  while(wybor!=8)
+  while(wybor!=8) /*program wykonuje sie dopoki nie wybierzemy ocji 8*/
  {
   printf("Menu\n");
   printf("1.\tWczytaj\n");
