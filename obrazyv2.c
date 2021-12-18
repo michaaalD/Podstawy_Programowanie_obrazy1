@@ -204,7 +204,7 @@ int main()
 	      scanf("%s",zapis_nazwa);
 	      zapis_plik=fopen(zapis_nazwa,"w");
       	if(zapis_plik!=NULL){
-        	zapisz(zapis_plik,wymx,wymy,obraz_pgm,szarosci);
+	  zapisz(zapis_plik,obraz_pgm, wymx, wymy, szarosci);
         	printf("Plik zapisany\n");
       		}
         fclose(zapis_plik);
