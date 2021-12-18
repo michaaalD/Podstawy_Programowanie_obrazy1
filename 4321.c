@@ -164,6 +164,8 @@ int main()
   FILE *plik;
   char nazwa_pliku[50];
 
+  while(wybor!=8)
+ {
   printf("Menu\n");
   printf("1.\tWczytaj\n");
   printf("2.\tZapisz\n");
@@ -176,8 +178,7 @@ int main()
   
   
 
- while(wybor!=8)
- {
+
   scanf("%d",&wybor);
   
   switch(wybor)
@@ -275,8 +276,9 @@ int main()
       }
 
     default:
-      printf("Niepoprawny wybor opcji\n");
-	    break;
+      if(wybor!=8)
+	printf("Niepoprawny wybor opcji\n");
+      break;
     
 }
 }
