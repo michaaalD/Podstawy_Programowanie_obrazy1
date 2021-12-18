@@ -1,4 +1,3 @@
-#
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -130,14 +129,14 @@ int zapisz(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci,char *zapis_na
   
   strcpy(polecenie,"touch ");
   strcat(polecenie,zapis_nazwa);
-  strcat(polecenie, "&");
+  strcat(polecenie, " &");
   system(polecenie);
 
   zapis_plik=fopen(zapis_nazwa, "w");
 
   fprintf(zapis_plik, "P2\n");
-  fprintf(zapis_plik , "%d %d",wymx,wymy);
-  fprintf(zapis_plik , "%d", szarosci);
+  fprintf(zapis_plik , "%d %d\n",wymx,wymy);
+  fprintf(zapis_plik , "%d\n", szarosci);
 
   for(i=0; i<wymy; i++){
       for(j=0; j<wymx; j++){
@@ -221,7 +220,7 @@ int main()
 	  zapisz(obraz_pgm, wymx, wymy, szarosci, zapis_nazwa);
         	printf("Plik zapisany\n");
       		}
-        fclose(zapis_plik);
+       
       }
       else
         printf("Nie wczytano obrazu\n");
