@@ -110,19 +110,20 @@ void negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 	      }
   }
 	  
-int zapisz(FILE *plik_wy, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+void zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 {
   int i,j;
   
-  fprintf(plik_wy, "P2\n");
-  fprintf(plik_wy, "%d %d %d",wymx,wymy,szarosci);
+  fprintf(zapis_plik, "P2\n");
+  fprintf(zapis_plik , "%d %d %d",wymx,wymy,szarosci);
 
   for(int i=0; i<wymy; i++){
       for(int j=0; j<wymx; j++){
-         fprintf(plik_wy,"%d",obraz_pgm[i][j]);
+         fprintf(zapis_plik,"%d",obraz_pgm[i][j]);
 	}
-     fprintf(plik_wy, "\n");
+     fprintf(zapis_plik, "\n");
     }
+  
 }
 
 /* Wyswietlenie obrazu o zadanej nazwie za pomoca programu "display"   */
@@ -138,19 +139,17 @@ int zapisz(FILE *plik_wy, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci
 }
 
 
-
-
 int main() 
 {
   int wczytano_plik=0;
   int wybor;
   int obraz_pgm[MAX][MAX] ;
   int wymx,wymy,szarosci;
+  int odczytano = 0;
 
   char zapis_nazwa[80];
   FILE *zapis_plik;
-  
-  int odczytano = 0;
+ 
   FILE *plik;
   char nazwa_pliku[50];
 
@@ -173,7 +172,7 @@ int main()
     case 1:
         {
 	    /* Wczytanie zawartosci wskazanego pliku do pamieci */
-	      printf("Podaj nazwe pliku:\n");
+	    printf("Podaj nazwe pliku:\n");
   	    scanf("%s",nazwa_pliku);
   	    plik=fopen(nazwa_pliku,"r");
 
@@ -194,14 +193,14 @@ int main()
 	      scanf("%s",zapis_nazwa);
 	      zapis_plik=fopen(zapis_nazwa,"w");
       	if(zapis_plik!=NULL){
-        	zapisz(wymx,wymy,obraz_pgm,szarosci,zapis_plik);
-        	printf("Plik zapisany pod nazwa %s\n",zapis_nazwa);
-        	fclose(zapis_plik);
+        	zapisz(zapis_plik,wymx,wymy, obraz_pgm,szarosci);
+        	printf("Plik zapisany\n");
       		}
+        fclose(zapis_plik);
       }
       else
         printf("Nie wczytano obrazu\n");
-	    break;
+	break;
       }
     case 3:
       {
@@ -209,8 +208,8 @@ int main()
         	plik=fopen(nazwa_pliku,"r");
         	if(odczytano!=0)
         	  wyswietl(nazwa_pliku);
-		      fclose(nazwa_pliku);
-		      printf("Wyswietlono obraz\n");
+		        fclose(nazwa_pliku);
+		 return odczytano;
 	      }
 	      else
         	printf("Nie wczytano obrazu\n");
@@ -266,6 +265,4 @@ Temat: "Przetwarzanie obrazów 1"
 17.12.2021r.
 
 Testy Programu:
-Program testowalem przy uzyciu plikow z diablo np. kubus.txt. Program poprwanie wczytywal obraz i kolejno wykonywal przetwarzanie obrazow.
-
-
+Program testowalem przy uzyciu plikow z diablo np. kubus.txt. Program poprwanie wczytywal obraz i kolejno wykonywal przetwarzanie obrazow.*/
