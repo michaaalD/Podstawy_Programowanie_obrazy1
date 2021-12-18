@@ -158,7 +158,7 @@ void zapisz_temp(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
   char polecenie[DL_LINII];      /* bufor pomocniczy do zestawienia polecenia */
 
   strcpy(polecenie,"display ");  /* konstrukcja polecenia postaci */
-  strcat(polecenie,nazwa_pliku);     /* display "nazwa_pliku" &       */
+  strcat(polecenie,"plik_temp");   
   strcat(polecenie," &");
   printf("%s\n",polecenie);      /* wydruk kontrolny polecenia */
   system(polecenie);             /* wykonanie polecenia        */
