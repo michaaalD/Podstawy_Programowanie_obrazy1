@@ -140,6 +140,8 @@ int zapisz_temp(FILE *plik_temp, int obraz_pgm[][MAX], int wymx, int wymy, int s
 {
   int i,j;
   
+  plik_temp=fopen("temp.pgm", "w");
+	  
   fprintf(plik_temp, "P2\n");
   fprintf(plik_temp , "%d %d %d",wymx,wymy,szarosci);
 
@@ -182,8 +184,6 @@ int main()
   FILE *plik_temp;
 	
  system("touch temp.pgm &");
- plik_temp=fopen("temp.pgm", "w");
- zapisz_temp(plik_temp, obraz_pgm, wymx, wymy, szarosci);
 
   while(wybor!=8)
  {
