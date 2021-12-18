@@ -68,7 +68,7 @@ int czytaj(FILE *plik_we,int obraz_pgm[][MAX],int *wymx,int *wymy, int *szarosci
 }                       /* Zwroc liczbe wczytanych pikseli */
 
 
-void rozmycie_pionowe(int obraz_pgm[][MAX], int wymx, int wymy)
+int rozmycie_pionowe(int obraz_pgm[][MAX], int wymx, int wymy)
 {
   int i,j,rozmycie;
 
@@ -87,9 +87,20 @@ void rozmycie_pionowe(int obraz_pgm[][MAX], int wymx, int wymy)
   }
 }
 	
+int progowanie(int obraz_pgm[][MAX], int wymx, int wymy, int prog)
+{
+	int i,j;
+	for(i=0; i<wymy; i++){
+		for(j=0; j<wymx; j++){
+			if(obraz_pgm[i][j] <= prog)
+				tab[i][j]=0;
+			else
+				tab[i][j]=szarosci;
+		}
+	}
+}
 
-
-void konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
+int konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
   {
       int i,j;
       for(i=0; i<wymy; i++){
@@ -99,7 +110,7 @@ void konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
     }
   }
 
-void negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+int negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
   {
       int i,j;
       
@@ -110,7 +121,7 @@ void negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 	      }
   }
 	  
-void zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+int zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 {
   int i,j;
   
@@ -146,6 +157,7 @@ int main()
   int obraz_pgm[MAX][MAX] ;
   int wymx,wymy,szarosci;
   int odczytano = 0;
+  int prog;
 
   char zapis_nazwa[80];
   FILE *zapis_plik;
@@ -227,7 +239,16 @@ int main()
       }
     case 5:
       {
-
+	if(wczytano_plik==WCZYTANO){
+		printf("Podaj wartosc progu:\n");
+		scanf("%d",&prog);
+		prog=(prog*szarosci)/100;
+		if(prog>0)
+			progowanie(obraz_pgm,wymx,wymy,szarosci,prog)
+		else
+			printf("ERROR - prog mniejszy od zera\n");
+		break;
+		
       }
     case 6:
       {
