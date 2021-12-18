@@ -121,21 +121,21 @@ void negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 	      }
   }
 	  
-int zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci,char *zapis_nazwa)
+int zapisz(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci,char *zapis_nazwa)
 {
   char polecenie[DL_LINII];
   int i,j;
-  FILE *plik;
+  FILE *zapis_plik;
   
   strcpy(polecenie,"touch");
   strcat(polecenie,zapis_nazwa);
   strcat(polecenie, "&");
   system(polecenie);
 
-  plik=fopen(zapis_nazwa, "w");
+  zapis_plik=fopen(zapis_nazwa, "w");
 
   fprintf(zapis_plik, "P2\n");
-  fprintf(zapis_plik , "%d %d",wymx,wymy,szarosci);
+  fprintf(zapis_plik , "%d %d",wymx,wymy);
   fprintf(zapis_plik , "%d", szarosci);
 
   for(i=0; i<wymy; i++){
@@ -217,7 +217,7 @@ int main()
 	      scanf("%s",zapis_nazwa);
 	      zapis_plik=fopen(zapis_nazwa,"w");
       	if(zapis_plik!=NULL){
-	  zapisz(zapis_plik, obraz_pgm, wymx, wymy, szarosci, zapis_nazwa);
+	  zapisz(obraz_pgm, wymx, wymy, szarosci, zapis_nazwa);
         	printf("Plik zapisany\n");
       		}
         fclose(zapis_plik);
