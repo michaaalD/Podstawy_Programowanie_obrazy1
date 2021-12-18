@@ -136,7 +136,7 @@ int zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szaro
   
 }
 
-int zapisz_temp(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+int zapisz_temp(FILE *plik_temp, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 {
   int i,j;
   
@@ -183,7 +183,7 @@ int main()
 	
  system("touch temp.pgm &");
  plik_temp=fopen("temp.pgm", "w");
- zapisz_temp(obraz_pgm, wymx, wymy, szarosci)
+ zapisz_temp(plik_temp, obraz_pgm, wymx, wymy, szarosci);
 
   while(wybor!=8)
  {
