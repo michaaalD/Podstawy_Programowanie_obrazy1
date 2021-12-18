@@ -319,3 +319,34 @@ void progowanie(int obraz_pgm[][MAX], int wymx, int wymy,int prog, int szarosci)
 	else
 	  printf("Nie wczytano obrazu\n");
 }
+
+void progowanie(int obraz_pgm[][MAX], int wymx, int wymy,float szarosci, float prog)
+{
+    int i,j;
+
+    prog = (prog/szarosci) * 100;
+
+
+
+
+    for(i=0; i<wymy; i++){
+        for(j=0; j<wymx; j++){
+            if(obraz_pgm[i][j] <= prog)
+                obraz_pgm[i][j]=0;
+            else
+                obraz_pgm[i][j]=szarosci;
+        }
+    }
+}
+
+case 5:
+      {
+         if(wczytano_plik==WCZYTANO){
+              printf("Podaj wartosc progu:\n");
+              scanf("%d",&prog);
+
+                  progowanie(obraz_pgm,wymx,wymy,szarosci, prog);
+
+       }
+        else
+          printf("Nie wczytano obrazu\n");
