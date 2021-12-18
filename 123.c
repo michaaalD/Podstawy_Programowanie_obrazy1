@@ -87,7 +87,7 @@ int rozmycie_pionowe(int obraz_pgm[][MAX], int wymx, int wymy)
   }
 }
 	
-int progowanie(int obraz_pgm[][MAX], int wymx, int wymy, int prog, int szarosci)
+void progowanie(int obraz_pgm[][MAX], int wymx, int wymy, int prog, int szarosci)
 {
 	int i,j;
 	for(i=0; i<wymy; i++){
@@ -100,7 +100,7 @@ int progowanie(int obraz_pgm[][MAX], int wymx, int wymy, int prog, int szarosci)
 	}
 }
 
-int konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
+void konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
   {
       int i,j;
       for(i=0; i<wymy; i++){
@@ -109,8 +109,7 @@ int konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
         }
     }
   }
-
-int negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+void negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
   {
       int i,j;
       for(i=0; i<wymy; i++){
@@ -119,8 +118,7 @@ int negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 	          }
 	      }
   }
-	  
-int zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+int  zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 {
   int i,j;
   
@@ -136,10 +134,10 @@ int zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szaro
   
 }
 
-void zapisz_temp(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+int zapisz_temp(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 {
   int i,j;
-  FILE *plik_temp;
+  FILE *plik_temp = fopen("temp.pmg", "w");
 
   fprintf(plik_temp, "P2\n");
   fprintf(plik_temp , "%d %d %d",wymx,wymy,szarosci);
@@ -158,7 +156,7 @@ void zapisz_temp(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
   char polecenie[DL_LINII];      /* bufor pomocniczy do zestawienia polecenia */
 
   strcpy(polecenie,"display ");  /* konstrukcja polecenia postaci */
-  strcat(polecenie,"plik_temp");   
+  strcat(polecenie,nazwa_pliku);     /* display "nazwa_pliku" &       */
   strcat(polecenie," &");
   printf("%s\n",polecenie);      /* wydruk kontrolny polecenia */
   system(polecenie);             /* wykonanie polecenia        */
