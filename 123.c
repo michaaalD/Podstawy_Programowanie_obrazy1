@@ -68,7 +68,7 @@ int czytaj(FILE *plik_we,int obraz_pgm[][MAX],int *wymx,int *wymy, int *szarosci
 }                       /* Zwroc liczbe wczytanych pikseli */
 
 
-int rozmycie_pionowe(int obraz_pgm[][MAX], int wymx, int wymy)
+void rozmycie_pionowe(int obraz_pgm[][MAX], int wymx, int wymy)
 {
   int i,j,rozmycie;
 
@@ -87,7 +87,7 @@ int rozmycie_pionowe(int obraz_pgm[][MAX], int wymx, int wymy)
   }
 }
 	
-int progowanie(int obraz_pgm[][MAX], int wymx, int wymy, int prog, int szarosci)
+void progowanie(int obraz_pgm[][MAX], int wymx, int wymy, int prog, int szarosci)
 {
 	int i,j;
 	for(i=0; i<wymy; i++){
@@ -100,7 +100,7 @@ int progowanie(int obraz_pgm[][MAX], int wymx, int wymy, int prog, int szarosci)
 	}
 }
 
-int konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
+void konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
   {
       int i,j;
       for(i=0; i<wymy; i++){
@@ -110,7 +110,7 @@ int konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
     }
   }
 
-int negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+void negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
   {
       int i,j;
       for(i=0; i<wymy; i++){
@@ -120,7 +120,7 @@ int negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 	      }
   }
 	  
-int zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+void zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 {
   int i,j;
   
@@ -136,10 +136,12 @@ int zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szaro
   
 }
 
-int zapisz_temp(FILE *plik_temp, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+void zapisz_temp(FILE *plik_temp, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 {
   int i,j;
   
+  plik_temp=fopen("temp.pgm", "w");
+	  
   fprintf(plik_temp, "P2\n");
   fprintf(plik_temp , "%d %d %d",wymx,wymy,szarosci);
 
@@ -182,8 +184,6 @@ int main()
   FILE *plik_temp;
 	
  system("touch temp.pgm &");
- plik_temp=fopen("temp.pgm", "w");
- zapisz_temp(plik_temp, obraz_pgm, wymx, wymy, szarosci);
 
   while(wybor!=8)
  {
@@ -239,7 +239,6 @@ int main()
       }
     case 3:
       {
-        zapisz_temp(plik_temp, obraz_pgm, wymx, wymy, szarosci);
         if(wczytano_plik==WCZYTANO){
         	plik=fopen(nazwa_pliku,"r");
         	if(odczytano!=0)
