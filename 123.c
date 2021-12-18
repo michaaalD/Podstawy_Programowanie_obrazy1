@@ -68,7 +68,7 @@ int czytaj(FILE *plik_we,int obraz_pgm[][MAX],int *wymx,int *wymy, int *szarosci
 }                       /* Zwroc liczbe wczytanych pikseli */
 
 
-void rozmycie_pionowe(int obraz_pgm[][MAX], int wymx, int wymy)
+int rozmycie_pionowe(int obraz_pgm[][MAX], int wymx, int wymy)
 {
   int i,j,rozmycie;
 
@@ -87,7 +87,7 @@ void rozmycie_pionowe(int obraz_pgm[][MAX], int wymx, int wymy)
   }
 }
 	
-void progowanie(int obraz_pgm[][MAX], int wymx, int wymy, int prog, int szarosci)
+int progowanie(int obraz_pgm[][MAX], int wymx, int wymy, int prog, int szarosci)
 {
 	int i,j;
 	for(i=0; i<wymy; i++){
@@ -100,7 +100,7 @@ void progowanie(int obraz_pgm[][MAX], int wymx, int wymy, int prog, int szarosci
 	}
 }
 
-void konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
+int konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
   {
       int i,j;
       for(i=0; i<wymy; i++){
@@ -110,7 +110,7 @@ void konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
     }
   }
 
-void negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+int negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
   {
       int i,j;
       for(i=0; i<wymy; i++){
@@ -120,7 +120,7 @@ void negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 	      }
   }
 	  
-void zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+int zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 {
   int i,j;
   
@@ -136,12 +136,11 @@ void zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szar
   
 }
 
-void zapisz_temp(FILE *plik_temp, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+void zapisz_temp(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
 {
   int i,j;
-  
-  plik_temp=fopen("temp.pgm", "w");
-	  
+  FILE *plik_temp;
+
   fprintf(plik_temp, "P2\n");
   fprintf(plik_temp , "%d %d %d",wymx,wymy,szarosci);
 
@@ -151,7 +150,6 @@ void zapisz_temp(FILE *plik_temp, int obraz_pgm[][MAX], int wymx, int wymy, int 
 	}
      fprintf(plik_temp, "\n");
     }
-  
 }
 
 /* Wyswietlenie obrazu o zadanej nazwie za pomoca programu "display"   */
@@ -181,10 +179,6 @@ int main()
   FILE *plik;
   char nazwa_pliku[50];
 	
-  FILE *plik_temp;
-	
- system("touch temp.pgm &");
-
   while(wybor!=8)
  {
   printf("Menu\n");
@@ -197,9 +191,6 @@ int main()
   printf("7.\tRozmycie Pionowe\n");
   printf("8.\tKoniec Programu\n");
   
-  
-
-
   scanf("%d",&wybor);
   
   switch(wybor)
@@ -239,6 +230,7 @@ int main()
       }
     case 3:
       {
+        zapisz_temp(obraz_pgm, wymx, wymy, szarosci);
         if(wczytano_plik==WCZYTANO){
         	plik=fopen(nazwa_pliku,"r");
         	if(odczytano!=0)
@@ -298,7 +290,7 @@ int main()
 
     default:
       if(wybor!=8)
-	printf("Niepoprawny wybor opcji\n");
+	    printf("Niepoprawny wybor opcji\n");
       break;
     
 }
