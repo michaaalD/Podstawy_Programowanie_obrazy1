@@ -1,3 +1,4 @@
+#
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -127,7 +128,7 @@ int zapisz(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci,char *zapis_na
   int i,j;
   FILE *zapis_plik;
   
-  strcpy(polecenie,"touch");
+  strcpy(polecenie,"touch ");
   strcat(polecenie,zapis_nazwa);
   strcat(polecenie, "&");
   system(polecenie);
@@ -297,4 +298,3 @@ fclose(plik);
 return 0;
   
 }
-
