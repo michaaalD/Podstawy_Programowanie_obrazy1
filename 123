@@ -113,7 +113,6 @@ int konturowanie(int obraz_pgm[][MAX], int wymx, int wymy)
 int negatyw(int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
   {
       int i,j;
-      
       for(i=0; i<wymy; i++){
 	        for(j=0; j<wymx; j++){
 	          obraz_pgm[i][j]=szarosci-obraz_pgm[i][j];
@@ -133,6 +132,22 @@ int zapisz(FILE *zapis_plik, int obraz_pgm[][MAX], int wymx, int wymy, int szaro
          fprintf(zapis_plik,"%d",obraz_pgm[i][j]);
 	}
      fprintf(zapis_plik, "\n");
+    }
+  
+}
+
+int zapisz_temp(FILE *plik_temp, int obraz_pgm[][MAX], int wymx, int wymy, int szarosci)
+{
+  int i,j;
+  
+  fprintf(plik_temp, "P2\n");
+  fprintf(plik_temp , "%d %d %d",wymx,wymy,szarosci);
+
+  for(int i=0; i<wymy; i++){
+      for(int j=0; j<wymx; j++){
+         fprintf(plik_temp,"%d",obraz_pgm[i][j]);
+	}
+     fprintf(plik_temp, "\n");
     }
   
 }
@@ -163,23 +178,32 @@ int main()
  
   FILE *plik;
   char nazwa_pliku[50];
+	
+  FILE *plik_temp;
+	
+ system("touch temp.pgm &");
+ plik_temp=fopen("temp.pgm", "w");
+ zapisz_temp(plik_temp, obraz_pgm, wymx, wymy, szarosci);
 
+  while(wybor!=8)
+ {
   printf("Menu\n");
-  printf("1\tWczytaj\n");
-  printf("2\tZapisz\n");
-  printf("3\tWyswietl\n");
-  printf("4\tNegatyw\n");
-  printf("5\tProgowanie\n");
-  printf("6\tKonturowanie\n");
-  printf("7\tRozmycie Pionowe\n");
-  printf("8\tKoniec Programu\n");
+  printf("1.\tWczytaj\n");
+  printf("2.\tZapisz\n");
+  printf("3.\tWyswietl\n");
+  printf("4.\tNegatyw\n");
+  printf("5.\tProgowanie\n");
+  printf("6.\tKonturowanie\n");
+  printf("7.\tRozmycie Pionowe\n");
+  printf("8.\tKoniec Programu\n");
   
-  scanf("%d",&wybor);
+  
 
- 
+
+  scanf("%d",&wybor);
   
-   switch(wybor)
-    {
+  switch(wybor)
+  {
     case 1:
         {
 	    /* Wczytanie zawartosci wskazanego pliku do pamieci */
@@ -195,7 +219,7 @@ int main()
 	      }
 	    else
 		      printf("Nie wcztano pliku o nazwie %s\n",nazwa_pliku);
-  	    break;
+  	  break;
          }
     case 2:
       {
@@ -204,27 +228,28 @@ int main()
 	      scanf("%s",zapis_nazwa);
 	      zapis_plik=fopen(zapis_nazwa,"w");
       	if(zapis_plik!=NULL){
-        	zapisz(zapis_plik,wymx,wymy, obraz_pgm,szarosci);
+        	zapisz(zapis_plik, obraz_pgm, wymx, wymy, szarosci);
         	printf("Plik zapisany\n");
       		}
         fclose(zapis_plik);
       }
       else
         printf("Nie wczytano obrazu\n");
-	break;
+	    break;
       }
     case 3:
       {
+        zapisz_temp(plik_temp, obraz_pgm, wymx, wymy, szarosci);
         if(wczytano_plik==WCZYTANO){
         	plik=fopen(nazwa_pliku,"r");
         	if(odczytano!=0)
         	  wyswietl(nazwa_pliku);
-		        fclose(nazwa_pliku);
+		        fclose(plik);
 		 return odczytano;
 	      }
 	      else
         	printf("Nie wczytano obrazu\n");
-        break;
+      break;
       }
     case 4:
       {	
@@ -234,20 +259,23 @@ int main()
 	    }
 	    else
         	printf("Nie wczytano obrazu\n");
-	        break;
+	    break;
       }
     case 5:
       {
-	if(wczytano_plik==WCZYTANO){
-		printf("Podaj wartosc progu:\n");
-		scanf("%d",&prog);
-		prog=(prog*szarosci)/100;
-		if(prog>0)
-			progowanie(obraz_pgm,wymx,wymy,szarosci,prog);
-		else
-			printf("ERROR - prog mniejszy od zera\n");
-		break;
-		
+	     if(wczytano_plik==WCZYTANO){
+		      printf("Podaj wartosc progu:\n");
+		      scanf("%d",&prog);
+		      prog=(prog*szarosci)/100;
+		      if(prog>0)
+			      progowanie(obraz_pgm,wymx,wymy,szarosci,prog);
+		      else
+			      printf("ERROR - prog mniejszy od zera\n");
+       }
+        else
+          printf("Nie wczytano obrazu\n");
+       
+      break;
       }
     case 6:
       {
@@ -268,23 +296,16 @@ int main()
         	printf("Nie wczytano obrazu\n");
 	    break;
       }
-    case 8:
-      printf("Koniec Programu\n");
-      break;
-    default:
-      { printf("Niepoprawny wybor opcji\n");
-	      break;
-      }
-    }
-return 0;
-}
-}
-  
-/*
-Michal Dos
-Temat: "Przetwarzanie obrazów 1"
-17.12.2021r.
 
-Testy Programu:
-Program testowalem przy uzyciu plikow z diablo np. kubus.txt. 
-Program poprwanie wczytywal obraz i kolejno wykonywal przetwarzanie obrazow*/
+    default:
+      if(wybor!=8)
+	printf("Niepoprawny wybor opcji\n");
+      break;
+    
+}
+}
+printf("Koniec Programu\n");
+fclose(plik);
+return 0;
+  
+}
